@@ -62,7 +62,7 @@ class twitterNotification:
         response = requests.get('https://api.twitter.com/2/badge_count/badge_count.json?supports_ntab_urt=1', cookies=self.cookie_jar, headers=headers)
         if response.ok is False :
             if response.status_code == 429 : raise Exception("[Request] Refresh Twitter Web Page")
-            else : raise Exception("[Request] Something is Not Ok!")
+            else : raise Exception("[Request] Something is Wrong!")
         try:
             json_object = json.loads(response.content)
         except ValueError as e:
