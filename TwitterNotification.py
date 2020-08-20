@@ -21,7 +21,7 @@ class twitterNotification:
         self.run()
 
     def get_cookies(self):
-        path = os.getenv('APPDATA')+r"\Mozilla\Firefox\\"+(self.firefox_profile.replace('/', "\\"))+r"\cookies.sqlite"
+        path = os.getenv('APPDATA')+r"\Mozilla\Firefox\\"+self.firefox_profile.replace('/', "\\")+r"\cookies.sqlite"
         con = sqlite3.connect(path)
         cur = con.cursor()
         cur.execute("SELECT host, path, isSecure, expiry, name, value FROM moz_cookies WHERE host = '.twitter.com'")
