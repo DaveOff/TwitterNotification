@@ -15,12 +15,13 @@ class twitterNotification:
         if firefoxConfig.has_option('Profile0', 'Path') is False :
             raise Exception("[Init] Firefox Profile Did Not Find!")
         self.cookie_jar = cookielib.CookieJar()
+        self.firefox_profile = firefoxConfig.get('Profile0', 'Path')
         ''' Let's Go '''
         self.get_cookies()
         self.run()
 
     def get_cookies(self):
-        path = os.getenv('APPDATA')+r"\Mozilla\Firefox\Profiles\uqf6a0ki.default\cookies.sqlite"
+        path = os.getenv('APPDATA')+r"\Mozilla\Firefox\\"+(self.firefox_profile.replace('/', "\\"))+r"\cookies.sqlite"
         con = sqlite3.connect(path)
         cur = con.cursor()
         cur.execute("SELECT host, path, isSecure, expiry, name, value FROM moz_cookies WHERE host = '.twitter.com'")
