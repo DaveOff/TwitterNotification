@@ -7,6 +7,7 @@ from configparser import ConfigParser
 import json
 import winsound
 from time import sleep
+from nanoleaf.api import nanoleaf2twitter
 
 class twitterNotification:
     def __init__(self):
@@ -16,7 +17,9 @@ class twitterNotification:
             raise Exception("[Init] Firefox Profile Did Not Find!")
         self.cookie_jar = cookielib.CookieJar()
         self.firefox_profile = firefoxConfig.get('Profile0', 'Path')
+        self.nanoleaf = nanoleaf2twitter(ip='192.168.1.2', token='g6kAC9ArJGon3nXqysMJEz4OwIApZhOA')
         ''' Let's Go '''
+        self.keep_beeping = True
         self.get_cookies()
         self.run()
 
@@ -42,7 +45,8 @@ class twitterNotification:
     def run(self):
         while True :
             resp = self.request()
-            if resp['total_unread_count'] > 0 :
+            if resp['total_unread_count'] > 0:
+                self.nanoleaf.run()
                 winsound.Beep(500, 500)
                 winsound.Beep(500, 500)
                 sleep(10)
